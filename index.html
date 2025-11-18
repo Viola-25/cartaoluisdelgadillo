@@ -1,0 +1,707 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dr. Luis Fernando Delgadillo Trigo - Cartão de Visita Digital</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #4a90e2;
+            --accent-color: #f8f9fa;
+            --text-color: #2c3e50;
+            --light-gray: #ecf0f1;
+            --border-color: #e1e8ed;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            --shadow-hover: 0 8px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-color);
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .language-selector {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 1000;
+            background: white;
+            border-radius: 25px;
+            padding: 8px;
+            box-shadow: var(--shadow);
+            display: flex;
+            gap: 5px;
+        }
+
+        .lang-btn {
+            padding: 8px 16px;
+            border: none;
+            border-radius: 20px;
+            background: transparent;
+            color: var(--text-color);
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            font-size: 14px;
+        }
+
+        .lang-btn.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .lang-btn:hover:not(.active) {
+            background: var(--light-gray);
+        }
+
+        .business-card {
+            background: white;
+            border-radius: 20px;
+            box-shadow: var(--shadow);
+            overflow: hidden;
+            margin-top: 60px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .business-card:hover {
+            transform: translateY(-5px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .header {
+            background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+            color: white;
+            padding: 40px 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        .header::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100"><defs><pattern id="grain" width="100" height="100" patternUnits="userSpaceOnUse"><circle cx="25" cy="25" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="75" cy="75" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="50" cy="10" r="1" fill="%23ffffff" opacity="0.1"/><circle cx="10" cy="50" r="1" fill="%23ffffff" opacity="0.1"/></pattern></defs><rect width="100" height="100" fill="url(%23grain)"/></svg>') repeat;
+            opacity: 0.1;
+        }
+
+        .profile-photo {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 20px; /* Adicionado para centralizar e dar margem inferior */
+            border-radius: 50%;
+            border: 5px solid white;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            /* Estilos para a imagem de fundo */
+            background-size: cover;
+            background-position: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .doctor-name {
+            font-size: 2.2em;
+            font-weight: 700;
+            margin-bottom: 10px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .specialty {
+            font-size: 1.2em;
+            opacity: 0.95;
+            font-weight: 300;
+            position: relative;
+            z-index: 1;
+        }
+
+        .content {
+            padding: 40px 30px;
+        }
+
+        .section {
+            margin-bottom: 35px;
+            opacity: 0;
+            animation: fadeInUp 0.6s ease forwards;
+        }
+
+        .section:nth-child(1) { animation-delay: 0.2s; }
+        .section:nth-child(2) { animation-delay: 0.4s; }
+        .section:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.4em;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-icon {
+            width: 25px;
+            text-align: center;
+        }
+
+        .contact-info {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            padding: 15px;
+            background: var(--accent-color);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .contact-item:hover {
+            background: white;
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .contact-icon {
+            width: 45px;
+            height: 45px;
+            background: var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 18px;
+        }
+
+        .contact-text {
+            flex: 1;
+        }
+
+        .contact-label {
+            font-size: 0.9em;
+            color: #7f8c8d;
+            margin-bottom: 3px;
+        }
+
+        .contact-value {
+            font-weight: 600;
+            color: var(--text-color);
+        }
+
+        .contact-value a {
+            color: inherit;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-value a:hover {
+            color: var(--primary-color);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 30px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--border-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 25px;
+            padding: 20px;
+            background: white;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .timeline-item:hover {
+            box-shadow: var(--shadow);
+            transform: translateX(5px);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -32px;
+            top: 25px;
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            border: 3px solid white;
+            box-shadow: 0 0 0 3px var(--border-color);
+        }
+
+        .timeline-year {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-degree {
+            font-weight: 600;
+            color: var(--text-color);
+            margin-bottom: 5px;
+        }
+
+        .timeline-institution {
+            color: #7f8c8d;
+            font-size: 0.95em;
+        }
+
+        .experience-item {
+            background: white;
+            border-radius: 12px;
+            padding: 25px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--secondary-color);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .experience-item:hover {
+            box-shadow: var(--shadow);
+            transform: translateY(-2px);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 10px;
+            gap: 20px;
+        }
+
+        .experience-position {
+            font-weight: 600;
+            color: var(--text-color);
+            flex: 1;
+        }
+
+        .experience-status {
+            background: var(--secondary-color);
+            color: white;
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: 500;
+            white-space: nowrap;
+        }
+
+        .experience-institution {
+            color: #7f8c8d;
+            font-size: 0.95em;
+            font-style: italic;
+        }
+
+        .footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--accent-color);
+            border-top: 1px solid var(--border-color);
+            color: #7f8c8d;
+            font-size: 0.9em;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .language-selector {
+                top: 10px;
+                right: 10px;
+            }
+
+            .business-card {
+                margin-top: 70px;
+            }
+
+            .header {
+                padding: 30px 20px;
+            }
+
+            .profile-photo {
+                width: 120px;
+                height: 120px;
+                font-size: 36px;
+            }
+
+            .doctor-name {
+                font-size: 1.8em;
+            }
+
+            .specialty {
+                font-size: 1.1em;
+            }
+
+            .content {
+                padding: 30px 20px;
+            }
+
+            .contact-info {
+                grid-template-columns: 1fr;
+            }
+
+            .timeline {
+                padding-left: 20px;
+            }
+
+            .timeline-item {
+                padding: 15px;
+            }
+
+            .experience-header {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .experience-status {
+                align-self: flex-start;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .doctor-name {
+                font-size: 1.5em;
+            }
+
+            .section-title {
+                font-size: 1.2em;
+            }
+        }
+
+        .save-contact-btn {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 12px 25px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: 600;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+        }
+
+        .save-contact-btn:hover {
+            background: white;
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+        .save-contact-btn i {
+            margin-right: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div class="language-selector">
+        <button class="lang-btn active" data-lang="pt">PT</button>
+        <button class="lang-btn" data-lang="es">ES</button>
+    </div>
+
+    <div class="container">
+        <div class="business-card">
+            <div class="header">
+                <div class="profile-photo" style="background-image: url('https://i.imgur.com/Y8LzMxj.jpg'); background-color: var(--primary-color);">
+                </div>
+                <h1 class="doctor-name">Dr. Luis Fernando Delgadillo Trigo</h1>
+                <p class="specialty" data-pt="Médico Pediatra e Neonatologista" data-es="Médico Pediatra y Neonatólogo">Médico Pediatra e Neonatologista</p>
+            </div>
+
+            <div class="content">
+                <div class="section" style="text-align: center;">
+                    <a href="#" id="vcard-btn" class="save-contact-btn" data-pt-text="<i class='fas fa-address-card'></i> Salvar Contato" data-es-text="<i class='fas fa-address-card'></i> Guardar Contacto">
+                        <i class="fas fa-address-card"></i> Salvar Contato
+                    </a>
+                </div>
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-address-book section-icon"></i>
+                        <span data-pt="CONTATOS" data-es="CONTACTOS">CONTATOS</span>
+                    </h2>
+                    <div class="contact-info">
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-envelope"></i>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label" data-pt="Email" data-es="Correo">Email</div>
+                                <div class="contact-value">
+                                    <a href="mailto:delgadillo@uol.com.br">delgadillo@uol.com.br</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-phone"></i>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label" data-pt="Telefone" data-es="Teléfono">Telefone</div>
+                                <div class="contact-value">
+                                    <a href="tel:+5511999754297">(11) 99975-4297</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-whatsapp"></i>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label">WhatsApp</div>
+                                <div class="contact-value">
+                                    <a href="https://wa.me/5511999754297" target="_blank" data-pt="Iniciar Conversa" data-es="Iniciar Conversación">Iniciar Conversa</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-instagram"></i>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label" data-pt="Instagram" data-es="Instagram">Instagram</div>
+                                <div class="contact-value">
+                                    <a href="https://www.instagram.com/luisftrigo__?igsh=MXM3ZDlzdHZ6YTQ1MA==" target="_blank">@luisftrigo__</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fab fa-linkedin-in"></i>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label">LinkedIn</div>
+                                <div class="contact-value">
+                                    <a href="https://br.linkedin.com/in/luis-fernando-delgadillo-trigo-3334a99b" target="_blank" data-pt="Ver Perfil" data-es="Ver Perfil">Ver Perfil</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contact-item">
+                            <div class="contact-icon">
+                                <i class="fas fa-file-alt"></i>
+                            </div>
+                            <div class="contact-text">
+                                <div class="contact-label" data-pt="Currículo Lattes" data-es="Currículum Lattes">Currículo Lattes</div>
+                                <div class="contact-value">
+                                    <a href="http://lattes.cnpq.br/2943574140338588" target="_blank" data-pt="Acessar Currículo" data-es="Acceder Currículum">Acessar Currículo</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-graduation-cap section-icon"></i>
+                        <span data-pt="FORMAÇÃO ACADÊMICA" data-es="FORMACIÓN ACADÉMICA">FORMAÇÃO ACADÊMICA</span>
+                    </h2>
+                    <div class="timeline">
+                        <div class="timeline-item">
+                            <div class="timeline-year">2024</div>
+                            <div class="timeline-degree" data-pt="Mestrado em Nutrição" data-es="Mestrado en Nutrición">Mestrado em Nutrição</div>
+                            <div class="timeline-institution">Centro Universitário São Camilo</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">2021</div>
+                            <div class="timeline-degree" data-pt="Gestão em Saúde" data-es="Gestión de la Salud">Gestão em Saúde</div>
+                            <div class="timeline-institution">Fundação Getúlio Vargas</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1994</div>
+                            <div class="timeline-degree" data-pt="Residência em Neonatologia" data-es="Especialista en Neonatología">Residência em Neonatologia</div>
+                            <div class="timeline-institution">Santa Casa de Misericórdia de São Paulo</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1992</div>
+                            <div class="timeline-degree" data-pt="Residência em Pediatria" data-es="Especialista en Pediatría">Residência em Pediatria</div>
+                            <div class="timeline-institution">Santa Casa de Misericórdia de São Paulo</div>
+                        </div>
+                        <div class="timeline-item">
+                            <div class="timeline-year">1990</div>
+                            <div class="timeline-degree" data-pt="Graduação em Medicina" data-es="Graduado en Medicina">Graduação em Medicina</div>
+                            <div class="timeline-institution">Universidad Mayor de San Simon</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-briefcase section-icon"></i>
+                        <span data-pt="EXPERIÊNCIAS PROFISSIONAIS" data-es="EXPERIENCIAS PROFESIONALES">EXPERIÊNCIAS PROFISSIONAIS</span>
+                    </h2>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-position" data-pt="Coordenador da Residência de Pediatria" data-es="Coordinador de la Residencia de Pediatría">Coordenador da Residência de Pediatria</div>
+                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
+                        </div>
+                        <div class="experience-institution">Secretaria de Saúde de São Bernardo Do Campo</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-position" data-pt="Coordenador da Neonatologia" data-es="Coordinador Neonatal">Coordenador da Neonatologia</div>
+                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
+                        </div>
+                        <div class="experience-institution">Hospital e Maternidade Notrecare Intermédica ABC</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-position" data-pt="Coordenador da UTI Neonatal" data-es="Coordinador de Terapia Intensiva Neonatal">Coordenador da UTI Neonatal</div>
+                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
+                        </div>
+                        <div class="experience-institution">Hospital Estadual Mario Covas</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-position" data-pt="Professor do Internato na área de Pediatria" data-es="Profesor de Prácticas en el área de Pediatría">Professor do Internato na área de Pediatria</div>
+                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
+                        </div>
+                        <div class="experience-institution">Centro Universitário São Camilo</div>
+                    </div>
+                    <div class="experience-item">
+                        <div class="experience-header">
+                            <div class="experience-position" data-pt="Médico preceptor" data-es="Médico preceptor">Médico preceptor</div>
+                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
+                        </div>
+                        <div class="experience-institution">Faculdade de Medicina do ABC</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                <p>&copy; <span id="current-year"></span> Dr. Luis Fernando Delgadillo Trigo. Todos os direitos reservados.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const langButtons = document.querySelectorAll('.lang-btn');
+            const translatableElements = document.querySelectorAll('[data-pt]');
+            const translations = {};
+
+            translatableElements.forEach(el => {
+                // Use a unique ID or create one if it doesn't exist
+                if (!el.id) el.id = `translatable-${Math.random().toString(36).substr(2, 9)}`;
+                translations[el.id] = {
+                    pt: el.dataset.pt || el.innerHTML,
+                    es: el.dataset.es || el.innerHTML,
+                    // Handle elements that have HTML content, like the vCard button
+                    ptText: el.dataset.ptText,
+                    esText: el.dataset.esText,
+                };
+            });
+
+            function setLanguage(lang) {
+                translatableElements.forEach(el => {
+                    const translationData = translations[el.id];
+                    if (translationData) {
+                        el.innerHTML = translationData[`${lang}Text`] || translationData[lang];
+                    }
+                });
+
+                langButtons.forEach(btn => {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                });
+                localStorage.setItem('preferredLanguage', lang);
+            }
+
+            langButtons.forEach(button => {
+                button.addEventListener('click', () => {
+                    setLanguage(button.dataset.lang);
+                });
+            });
+
+            const savedLang = localStorage.getItem('preferredLanguage') || 'pt';
+            setLanguage(savedLang);
+
+            // Atualiza o ano no rodapé
+            document.getElementById('current-year').textContent = new Date().getFullYear();
+
+            // Funcionalidade do vCard
+            document.getElementById('vcard-btn').addEventListener('click', function(e) {
+                e.preventDefault();
+                const vCard = `BEGIN:VCARD
+VERSION:3.0
+FN:Dr. Luis Fernando Delgadillo Trigo
+ORG:Médico Pediatra e Neonatologista
+TEL;TYPE=CELL,VOICE:+5511999754297
+EMAIL:delgadillo@uol.com.br
+URL;TYPE=Instagram:https://www.instagram.com/luisftrigo__
+URL;TYPE=LinkedIn:https://br.linkedin.com/in/luis-fernando-delgadillo-trigo-3334a99b
+URL;TYPE=Lattes:http://lattes.cnpq.br/2943574140338588
+URL;TYPE=Website:${window.location.href}
+END:VCARD`;
+                const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                
+                const link = document.createElement('a');
+                link.href = url;
+                link.download = 'DrLuisDelgadillo.vcf';
+                document.body.appendChild(link);
+                link.click();
+                document.body.removeChild(link);
+            });
+        });
+    </script>
+</body>
+</html>
