@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt"> <!-- Este atributo será atualizado via JS -->
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -150,6 +150,7 @@
         .section:nth-child(1) { animation-delay: 0.2s; }
         .section:nth-child(2) { animation-delay: 0.4s; }
         .section:nth-child(3) { animation-delay: 0.6s; }
+        .section:nth-child(4) { animation-delay: 0.8s; }
 
         @keyframes fadeInUp {
             from {
@@ -184,12 +185,14 @@
         }
 
         .contact-item {
+            text-decoration: none; /* Remove underline from link */
             display: flex;
             align-items: center;
             gap: 15px;
             padding: 15px;
             background: var(--accent-color);
             border-radius: 12px;
+            color: var(--text-color); /* Ensure text color is correct */
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
@@ -225,16 +228,6 @@
         .contact-value {
             font-weight: 600;
             color: var(--text-color);
-        }
-
-        .contact-value a {
-            color: inherit;
-            text-decoration: none;
-            transition: color 0.3s ease;
-        }
-
-        .contact-value a:hover {
-            color: var(--primary-color);
         }
 
         .timeline {
@@ -301,6 +294,12 @@
         .timeline-institution {
             color: #7f8c8d;
             font-size: 0.95em;
+        }
+
+        .summary-text {
+            text-align: justify;
+            color: #555;
+            line-height: 1.7;
         }
 
         .experience-item {
@@ -429,29 +428,33 @@
             }
         }
 
-        .save-contact-btn {
-            display: inline-block;
+        /* Share Button */
+        .share-fab {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
             background: var(--primary-color);
             color: white;
-            padding: 12px 25px;
-            border-radius: 25px;
-            text-decoration: none;
-            font-weight: 600;
-            margin-top: 20px;
+            border-radius: 50%;
+            border: none;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            box-shadow: var(--shadow);
+            cursor: pointer;
             transition: all 0.3s ease;
-            border: 2px solid transparent;
+            z-index: 1000;
         }
 
-        .save-contact-btn:hover {
-            background: white;
-            color: var(--primary-color);
-            border-color: var(--primary-color);
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
+        .share-fab:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1) rotate(10deg);
+            box-shadow: var(--shadow-hover);
         }
-        .save-contact-btn i {
-            margin-right: 8px;
-        }
+
     </style>
 </head>
 <body>
@@ -470,89 +473,102 @@
             </div>
 
             <div class="content">
-                <div class="section" style="text-align: center;">
-                    <a href="#" id="vcard-btn" class="save-contact-btn" data-pt-text="<i class='fas fa-address-card'></i> Salvar Contato" data-es-text="<i class='fas fa-address-card'></i> Guardar Contacto">
-                        <i class="fas fa-address-card"></i> Salvar Contato
-                    </a>
-                </div>
                 <div class="section">
                     <h2 class="section-title">
-                        <i class="fas fa-address-book section-icon"></i>
+                        <i class="fas fa-address-book section-icon" aria-hidden="true"></i>
                         <span data-pt="CONTATOS" data-es="CONTACTOS">CONTATOS</span>
                     </h2>
                     <div class="contact-info">
-                        <div class="contact-item">
+                        <a href="mailto:delgadillo@uol.com.br" class="contact-item">
                             <div class="contact-icon">
                                 <i class="fas fa-envelope"></i>
                             </div>
                             <div class="contact-text">
-                                <div class="contact-label" data-pt="Email" data-es="Correo">Email</div>
+                                <div class="contact-label" data-pt="Email" data-es="Correo electrónico">Email</div>
                                 <div class="contact-value">
-                                    <a href="mailto:delgadillo@uol.com.br">delgadillo@uol.com.br</a>
+                                    delgadillo@uol.com.br
                                 </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
+                        </a>
+                        <a href="tel:+5511999754297" class="contact-item">
                             <div class="contact-icon">
-                                <i class="fas fa-phone"></i>
+                                <i class="fas fa-phone" aria-hidden="true"></i>
                             </div>
                             <div class="contact-text">
                                 <div class="contact-label" data-pt="Telefone" data-es="Teléfono">Telefone</div>
                                 <div class="contact-value">
-                                    <a href="tel:+5511999754297">(11) 99975-4297</a>
+                                    (11) 99975-4297
                                 </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
+                        </a>
+                        <a href="https://wa.me/5511999754297" target="_blank" rel="noopener noreferrer" class="contact-item">
                             <div class="contact-icon">
-                                <i class="fab fa-whatsapp"></i>
+                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
                             </div>
                             <div class="contact-text">
-                                <div class="contact-label">WhatsApp</div>
-                                <div class="contact-value">
-                                    <a href="https://wa.me/5511999754297" target="_blank" data-pt="Iniciar Conversa" data-es="Iniciar Conversación">Iniciar Conversa</a>
+                                <div class="contact-label" data-pt="WhatsApp" data-es="WhatsApp">WhatsApp</div>
+                                <div class="contact-value" data-pt="Iniciar Conversa" data-es="Iniciar Conversación">
+                                    Iniciar Conversa
                                 </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
+                        </a>
+                        <a href="https://www.instagram.com/luisftrigo__?igsh=MXM3ZDlzdHZ6YTQ1MA==" target="_blank" rel="noopener noreferrer" class="contact-item">
                             <div class="contact-icon">
-                                <i class="fab fa-instagram"></i>
+                                <i class="fab fa-instagram" aria-hidden="true"></i>
                             </div>
                             <div class="contact-text">
                                 <div class="contact-label" data-pt="Instagram" data-es="Instagram">Instagram</div>
                                 <div class="contact-value">
-                                    <a href="https://www.instagram.com/luisftrigo__?igsh=MXM3ZDlzdHZ6YTQ1MA==" target="_blank">@luisftrigo__</a>
+                                    @luisftrigo__
                                 </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
+                        </a>
+                        <a href="https://br.linkedin.com/in/luis-fernando-delgadillo-trigo-3334a99b" target="_blank" rel="noopener noreferrer" class="contact-item">
                             <div class="contact-icon">
-                                <i class="fab fa-linkedin-in"></i>
+                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
                             </div>
                             <div class="contact-text">
-                                <div class="contact-label">LinkedIn</div>
-                                <div class="contact-value">
-                                    <a href="https://br.linkedin.com/in/luis-fernando-delgadillo-trigo-3334a99b" target="_blank" data-pt="Ver Perfil" data-es="Ver Perfil">Ver Perfil</a>
+                                <div class="contact-label" data-pt="LinkedIn" data-es="LinkedIn">LinkedIn</div>
+                                <div class="contact-value" data-pt="Ver Perfil" data-es="Ver Perfil">
+                                    Ver Perfil
                                 </div>
                             </div>
-                        </div>
-                        <div class="contact-item">
+                        </a>
+                        <a href="http://lattes.cnpq.br/2943574140338588" target="_blank" rel="noopener noreferrer" class="contact-item">
                             <div class="contact-icon">
-                                <i class="fas fa-file-alt"></i>
+                                <i class="fas fa-file-alt" aria-hidden="true"></i>
                             </div>
                             <div class="contact-text">
                                 <div class="contact-label" data-pt="Currículo Lattes" data-es="Currículum Lattes">Currículo Lattes</div>
-                                <div class="contact-value">
-                                    <a href="http://lattes.cnpq.br/2943574140338588" target="_blank" data-pt="Acessar Currículo" data-es="Acceder Currículum">Acessar Currículo</a>
+                                <div class="contact-value" data-pt="Acessar Currículo" data-es="Acceder Currículum">
+                                    Acessar Currículo
                                 </div>
                             </div>
-                        </div>
+                        </a>
                     </div>
                 </div>
 
                 <div class="section">
                     <h2 class="section-title">
-                        <i class="fas fa-graduation-cap section-icon"></i>
+                        <i class="fas fa-info-circle section-icon" aria-hidden="true"></i>
+                        <span data-pt="RESUMO PROFISSIONAL" data-es="RESUMEN PROFESIONAL">RESUMO PROFISSIONAL</span>
+                    </h2>
+                    <div class="summary-text">
+                        <p data-pt="Possui graduação em medicina pela Universidad Mayor de San Simon (1990) e Mestrado Profissional em Nutrição pelo Centro Universitário São Camilo." data-es="Graduado en medicina por la Universidad Mayor de San Simon (1990) y tiene una Maestría Profesional en Nutrición del Centro Universitário São Camilo.">
+                            Possui graduação em medicina pela Universidad Mayor de San Simon (1990) e Mestrado Profissional em Nutrição pelo Centro Universitário São Camilo.
+                        </p>
+                        <p data-pt="Atualmente é coordenador da Residência de Pediatria do SUS ABC, coordenador da unidade de terapia intensiva neonatal da Intermédica ABC e do Hospital Estadual Mário Covas, médico colaborador da Faculdade de Medicina do ABC, professor da Faculdade de Medicina São Camilo e médico diarista no Complexo Hospitalar Municipal de São Bernardo do Campo." data-es="Actualmente es coordinador de la Residencia de Pediatría del SUS ABC, coordinador de la unidad de cuidados intensivos neonatales de Intermédica ABC y del Hospital Estadual Mário Covas, médico colaborador de la Facultad de Medicina del ABC, profesor de la Facultad de Medicina São Camilo y médico de planta en el Complejo Hospitalario Municipal de São Bernardo do Campo.">
+                            Atualmente é coordenador da Residência de Pediatria do SUS ABC, coordenador da unidade de terapia intensiva neonatal da Intermédica ABC e do Hospital Estadual Mário Covas, médico colaborador da Faculdade de Medicina do ABC, professor da Faculdade de Medicina São Camilo e médico diarista no Complexo Hospitalar Municipal de São Bernardo do Campo.
+                        </p>
+                        <p data-pt="Tem vasta experiência na área de Medicina, com ênfase em Neonatologia, atuando principalmente nos temas: neonatal, recém-nascido, emergências em sala de parto, pediatria e anti-inflamatório." data-es="Tiene una vasta experiencia en el área de Medicina, con énfasis en Neonatología, actuando principalmente en los siguientes temas: neonatal, recién nacido, emergencias en la sala de partos, pediatría y antiinflamatorios.">
+                            Tem vasta experiência na área de Medicina, com ênfase em Neonatologia, atuando principalmente nos temas: neonatal, recém-nascido, emergências em sala de parto, pediatria e anti-inflamatório.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="section">
+                    <h2 class="section-title">
+                        <i class="fas fa-graduation-cap section-icon" aria-hidden="true"></i>
                         <span data-pt="FORMAÇÃO ACADÊMICA" data-es="FORMACIÓN ACADÉMICA">FORMAÇÃO ACADÊMICA</span>
                     </h2>
                     <div class="timeline">
@@ -586,7 +602,7 @@
 
                 <div class="section">
                     <h2 class="section-title">
-                        <i class="fas fa-briefcase section-icon"></i>
+                        <i class="fas fa-briefcase section-icon" aria-hidden="true"></i>
                         <span data-pt="EXPERIÊNCIAS PROFISSIONAIS" data-es="EXPERIENCIAS PROFESIONALES">EXPERIÊNCIAS PROFISSIONAIS</span>
                     </h2>
                     <div class="experience-item">
@@ -633,6 +649,11 @@
         </div>
     </div>
 
+    <!-- Botão Flutuante de Compartilhamento -->
+    <button class="share-fab" id="share-btn" title="Compartilhar">
+        <i class="fas fa-share-alt"></i>
+    </button>
+
     <script>
         document.addEventListener('DOMContentLoaded', function() {
             const langButtons = document.querySelectorAll('.lang-btn');
@@ -659,6 +680,9 @@
                     }
                 });
 
+                // Atualiza o lang da tag <html> para acessibilidade
+                document.documentElement.lang = lang;
+
                 langButtons.forEach(btn => {
                     btn.classList.toggle('active', btn.dataset.lang === lang);
                 });
@@ -677,29 +701,27 @@
             // Atualiza o ano no rodapé
             document.getElementById('current-year').textContent = new Date().getFullYear();
 
-            // Funcionalidade do vCard
-            document.getElementById('vcard-btn').addEventListener('click', function(e) {
-                e.preventDefault();
-                const vCard = `BEGIN:VCARD
-VERSION:3.0
-FN:Dr. Luis Fernando Delgadillo Trigo
-ORG:Médico Pediatra e Neonatologista
-TEL;TYPE=CELL,VOICE:+5511999754297
-EMAIL:delgadillo@uol.com.br
-URL;TYPE=Instagram:https://www.instagram.com/luisftrigo__
-URL;TYPE=LinkedIn:https://br.linkedin.com/in/luis-fernando-delgadillo-trigo-3334a99b
-URL;TYPE=Lattes:http://lattes.cnpq.br/2943574140338588
-URL;TYPE=Website:${window.location.href}
-END:VCARD`;
-                const blob = new Blob([vCard], { type: 'text/vcard;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-                
-                const link = document.createElement('a');
-                link.href = url;
-                link.download = 'DrLuisDelgadillo.vcf';
-                document.body.appendChild(link);
-                link.click();
-                document.body.removeChild(link);
+            // Funcionalidade de Compartilhamento
+            const shareBtn = document.getElementById('share-btn');
+            shareBtn.addEventListener('click', async () => {
+                const shareData = {
+                    title: 'Dr. Luis Fernando Delgadillo Trigo',
+                    text: 'Cartão de Visita Digital - Médico Pediatra e Neonatologista',
+                    url: window.location.href
+                };
+
+                try {
+                    // Usa a Web Share API se disponível
+                    if (navigator.share) {
+                        await navigator.share(shareData);
+                    } else {
+                        // Fallback para desktop: copiar para a área de transferência
+                        await navigator.clipboard.writeText(window.location.href);
+                        alert('Link do cartão copiado para a área de transferência!');
+                    }
+                } catch (err) {
+                    console.error("Erro ao compartilhar: ", err);
+                }
             });
         });
     </script>
