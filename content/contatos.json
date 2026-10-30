@@ -1,0 +1,52 @@
+{
+  "itens": [
+    {
+      "tipo": "email",
+      "rotulo_pt": "Email",
+      "rotulo_es": "Correo electrónico",
+      "valor_pt": "delgadillo@uol.com.br",
+      "valor_es": "delgadillo@uol.com.br",
+      "link": "mailto:delgadillo@uol.com.br"
+    },
+    {
+      "tipo": "telefone",
+      "rotulo_pt": "Telefone",
+      "rotulo_es": "Teléfono",
+      "valor_pt": "(11) 99975-4297",
+      "valor_es": "(11) 99975-4297",
+      "link": "tel:+5511999754297"
+    },
+    {
+      "tipo": "whatsapp",
+      "rotulo_pt": "WhatsApp",
+      "rotulo_es": "WhatsApp",
+      "valor_pt": "Iniciar Conversa",
+      "valor_es": "Iniciar Conversación",
+      "link": "https://wa.me/5511999754297"
+    },
+    {
+      "tipo": "instagram",
+      "rotulo_pt": "Instagram",
+      "rotulo_es": "Instagram",
+      "valor_pt": "@luisftrigo__",
+      "valor_es": "@luisftrigo__",
+      "link": "https://www.instagram.com/luisftrigo__?igsh=MXM3ZDlzdHZ6YTQ1MA=="
+    },
+    {
+      "tipo": "linkedin",
+      "rotulo_pt": "LinkedIn",
+      "rotulo_es": "LinkedIn",
+      "valor_pt": "Ver Perfil",
+      "valor_es": "Ver Perfil",
+      "link": "https://br.linkedin.com/in/luis-fernando-delgadillo-trigo-3334a99b"
+    },
+    {
+      "tipo": "lattes",
+      "rotulo_pt": "Currículo Lattes",
+      "rotulo_es": "Currículum Lattes",
+      "valor_pt": "Acessar Currículo",
+      "valor_es": "Acceder Currículum",
+      "link": "http://lattes.cnpq.br/2943574140338588"
+    }
+  ]
+}

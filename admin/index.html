@@ -5,6 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="robots" content="noindex, nofollow" />
     <title>Editar cartão de visita</title>
+    <style>
+        /* Ajustes visuais do painel: menos ruído para quem não é técnico. */
+
+        /* Esconde o botão de "verificar pré-visualização" (não usamos deploy preview). */
+        button[class*="RefreshPreviewButton"] {
+            display: none !important;
+        }
+
+        /* Texto de ajuda (hint) com contraste melhor e leitura mais fácil. */
+        [class*="FieldHint"] {
+            color: #5b6b7c !important;
+            font-size: 13px;
+            line-height: 1.45;
+        }
+    </style>
 </head>
 <body>
     <!-- Login por email/senha (Netlify Identity) -->

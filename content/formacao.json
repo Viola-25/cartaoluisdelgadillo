@@ -1,0 +1,34 @@
+{
+  "itens": [
+    {
+      "ano": "2024",
+      "curso_pt": "Mestrado em Nutrição",
+      "curso_es": "Mestrado en Nutrición",
+      "instituicao": "Centro Universitário São Camilo"
+    },
+    {
+      "ano": "2021",
+      "curso_pt": "Gestão em Saúde",
+      "curso_es": "Gestión de la Salud",
+      "instituicao": "Fundação Getúlio Vargas"
+    },
+    {
+      "ano": "1994",
+      "curso_pt": "Residência em Neonatologia",
+      "curso_es": "Especialista en Neonatología",
+      "instituicao": "Santa Casa de Misericórdia de São Paulo"
+    },
+    {
+      "ano": "1992",
+      "curso_pt": "Residência em Pediatria",
+      "curso_es": "Especialista en Pediatría",
+      "instituicao": "Santa Casa de Misericórdia de São Paulo"
+    },
+    {
+      "ano": "1990",
+      "curso_pt": "Graduação em Medicina",
+      "curso_es": "Graduado en Medicina",
+      "instituicao": "Universidad Mayor de San Simon"
+    }
+  ]
+}

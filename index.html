@@ -516,9 +516,28 @@
         (function () {
             'use strict';
 
-            // Todo o conteúdo do cartão vive em content/perfil.json.
+            // O conteúdo vive em content/*.json.
             // Para editar sem mexer em código, use /admin (Decap CMS).
-            const CONTENT_URL = 'content/perfil.json';
+            const CONTENT_FILES = {
+                identidade: 'content/identidade.json',
+                resumo: 'content/resumo.json',
+                contatos: 'content/contatos.json',
+                formacao: 'content/formacao.json',
+                experiencias: 'content/experiencias.json'
+            };
+
+            // Títulos das seções: fixos no código, não precisam de edição.
+            const TITULOS = {
+                resumo: { pt: 'RESUMO PROFISSIONAL', es: 'RESUMEN PROFESIONAL' },
+                contatos: { pt: 'CONTATOS', es: 'CONTACTOS' },
+                formacao: { pt: 'FORMAÇÃO ACADÊMICA', es: 'FORMACIÓN ACADÉMICA' },
+                experiencias: { pt: 'EXPERIÊNCIAS PROFISSIONAIS', es: 'EXPERIENCIAS PROFESIONALES' }
+            };
+
+            const RODAPE = {
+                pt: 'Todos os direitos reservados.',
+                es: 'Todos los derechos reservados.'
+            };
 
             const ICONS = {
                 email: 'fas fa-envelope',
@@ -551,6 +570,15 @@
                 return field[lang] || field.pt || field.es || '';
             }
 
+            // Campo de texto bilingue "achatado": base_pt / base_es.
+            // Se a versão no idioma atual estiver vazia, usa o português.
+            function tr(obj, base) {
+                if (!obj) return '';
+                const pt = obj[base + '_pt'] || '';
+                const es = obj[base + '_es'] || '';
+                return lang === 'es' ? (es || pt) : (pt || es);
+            }
+
             function sectionTitle(icon, text) {
                 const h2 = document.createElement('h2');
                 h2.className = 'section-title';
@@ -566,7 +594,7 @@
 
             function buildContatos(contatos) {
                 const section = newSection();
-                section.appendChild(sectionTitle('fas fa-address-book', pick(contatos.titulo)));
+                section.appendChild(sectionTitle('fas fa-address-book', pick(TITULOS.contatos)));
 
                 const grid = document.createElement('div');
                 grid.className = 'contact-info';
@@ -590,11 +618,11 @@
 
                     const label = document.createElement('div');
                     label.className = 'contact-label';
-                    label.textContent = pick(item.rotulo);
+                    label.textContent = tr(item, 'rotulo');
 
                     const value = document.createElement('div');
                     value.className = 'contact-value';
-                    value.textContent = pick(item.valor);
+                    value.textContent = tr(item, 'valor');
 
                     text.appendChild(label);
                     text.appendChild(value);
@@ -609,7 +637,7 @@
 
             function buildResumo(resumo) {
                 const section = newSection();
-                section.appendChild(sectionTitle('fas fa-info-circle', pick(resumo.titulo)));
+                section.appendChild(sectionTitle('fas fa-info-circle', pick(TITULOS.resumo)));
 
                 const wrapper = document.createElement('div');
                 wrapper.className = 'summary-text';
@@ -626,7 +654,7 @@
 
             function buildFormacao(formacao) {
                 const section = newSection();
-                section.appendChild(sectionTitle('fas fa-graduation-cap', pick(formacao.titulo)));
+                section.appendChild(sectionTitle('fas fa-graduation-cap', pick(TITULOS.formacao)));
 
                 const timeline = document.createElement('div');
                 timeline.className = 'timeline';
@@ -644,7 +672,7 @@
 
                     const curso = document.createElement('div');
                     curso.className = 'timeline-degree';
-                    curso.textContent = pick(item.curso);
+                    curso.textContent = tr(item, 'curso');
                     el.appendChild(curso);
 
                     if (item.instituicao) {
@@ -663,7 +691,7 @@
 
             function buildExperiencias(experiencias) {
                 const section = newSection();
-                section.appendChild(sectionTitle('fas fa-briefcase', pick(experiencias.titulo)));
+                section.appendChild(sectionTitle('fas fa-briefcase', pick(TITULOS.experiencias)));
 
                 (experiencias.itens || []).forEach(function (item) {
                     const el = document.createElement('div');
@@ -674,10 +702,10 @@
 
                     const cargo = document.createElement('div');
                     cargo.className = 'experience-position';
-                    cargo.textContent = pick(item.cargo);
+                    cargo.textContent = tr(item, 'cargo');
                     header.appendChild(cargo);
 
-                    const situacao = pick(item.situacao);
+                    const situacao = tr(item, 'situacao');
                     if (situacao) {
                         const status = document.createElement('div');
                         status.className = 'experience-status';
@@ -703,14 +731,17 @@
             function render() {
                 if (!data) return;
 
+                const identidade = data.identidade || {};
+                const nome = identidade.nome || '';
+
                 document.documentElement.lang = lang;
-                document.title = (data.nome || 'Cartão de visita') + ' - ' + pick(data.especialidade);
+                document.title = (nome || 'Cartão de visita') + ' - ' + tr(identidade, 'especialidade');
 
                 const photo = document.getElementById('profile-photo');
-                photo.style.backgroundImage = data.foto ? 'url("' + data.foto + '")' : '';
+                photo.style.backgroundImage = identidade.foto ? 'url("' + identidade.foto + '")' : '';
 
-                document.getElementById('doctor-name').textContent = data.nome || '';
-                document.getElementById('specialty').textContent = pick(data.especialidade);
+                document.getElementById('doctor-name').textContent = nome;
+                document.getElementById('specialty').textContent = tr(identidade, 'especialidade');
 
                 contentEl.innerHTML = '';
                 if (data.contatos) contentEl.appendChild(buildContatos(data.contatos));
@@ -718,8 +749,7 @@
                 if (data.formacao) contentEl.appendChild(buildFormacao(data.formacao));
                 if (data.experiencias) contentEl.appendChild(buildExperiencias(data.experiencias));
 
-                const rodape = pick(data.rodape);
-                footerEl.textContent = '© ' + new Date().getFullYear() + ' ' + (data.nome || '') + (rodape ? '. ' + rodape : '');
+                footerEl.textContent = '© ' + new Date().getFullYear() + ' ' + nome + '. ' + pick(RODAPE);
 
                 langButtons.forEach(function (btn) {
                     btn.classList.toggle('active', btn.dataset.lang === lang);
@@ -739,26 +769,41 @@
                 });
             });
 
-            fetch(CONTENT_URL, { cache: 'no-cache' })
-                .then(function (response) {
-                    if (!response.ok) throw new Error('HTTP ' + response.status);
-                    return response.json();
-                })
-                .then(function (json) {
-                    data = json;
-                    render();
-                })
-                .catch(function (error) {
-                    console.error('Erro ao carregar o conteúdo:', error);
-                    showError('Não foi possível carregar o conteúdo do cartão (' + CONTENT_URL + '). Se você abriu o arquivo direto no computador, use um servidor local ou acesse o site publicado.');
+            Promise.all(Object.keys(CONTENT_FILES).map(function (key) {
+                return fetch(CONTENT_FILES[key], { cache: 'no-cache' })
+                    .then(function (response) {
+                        if (!response.ok) throw new Error(CONTENT_FILES[key] + ': HTTP ' + response.status);
+                        return response.json();
+                    })
+                    .then(function (json) {
+                        return [key, json];
+                    })
+                    .catch(function (error) {
+                        console.error('Falha ao carregar o conteúdo:', error);
+                        return [key, null];
+                    });
+            })).then(function (results) {
+                data = {};
+                results.forEach(function (result) {
+                    data[result[0]] = result[1];
                 });
+
+                if (!data.identidade) {
+                    showError('Não foi possível carregar content/identidade.json. Se você abriu o arquivo direto no computador, use um servidor local ou acesse o site publicado.');
+                    return;
+                }
+
+                render();
+            });
 
             // Compartilhamento
             const shareBtn = document.getElementById('share-btn');
             shareBtn.addEventListener('click', async function () {
+                const identidade = (data && data.identidade) || {};
+                const especialidade = tr(identidade, 'especialidade');
                 const shareData = {
-                    title: data && data.nome ? data.nome : document.title,
-                    text: (data ? pick(data.especialidade) : '') + ' - Cartão de Visita Digital',
+                    title: identidade.nome || document.title,
+                    text: especialidade ? especialidade + ' - Cartão de Visita Digital' : 'Cartão de Visita Digital',
                     url: window.location.href
                 };
 

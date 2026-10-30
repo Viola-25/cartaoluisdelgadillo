@@ -9,7 +9,13 @@ backend:
     deleteMedia: 'CMS: removeu imagem {{path}}'
 
 locale: pt
-# site_url não é necessário: o painel usa o próprio domínio onde está publicado.
+
+# Formulário em coluna única, sem painel de preview ao lado.
+editor:
+  preview: false
+
+# Sem botão de "verificar pré-visualização" (não usamos deploy preview).
+show_preview_links: false
 
 media_folder: 'assets/uploads'
 public_folder: 'assets/uploads'
@@ -18,11 +24,14 @@ collections:
   - name: cartao
     label: Cartão de visita
     label_singular: Cartão
-    description: Todos os textos do cartão, em português e espanhol.
+    description: >-
+      Escolha abaixo o que quer editar. Depois de salvar, clique em
+      Publicar no canto superior direito.
     files:
-      - name: perfil
-        label: Dados do cartão
-        file: content/perfil.json
+      # ---------------------------------------------------------------
+      - name: identidade
+        label: 1. Nome, foto e especialidade
+        file: content/identidade.json
         fields:
           - label: Nome completo
             name: nome
@@ -33,135 +42,165 @@ collections:
             name: foto
             widget: image
             required: false
-            hint: Envie uma foto quadrada. Se ficar vazia, aparece só o círculo azul.
+            hint: Foto quadrada (ex. 600x600). O site recorta em círculo.
 
-          - label: Especialidade
-            name: especialidade
-            widget: object
+          - label: Especialidade (português)
+            name: especialidade_pt
+            widget: string
+            hint: 'Aparece embaixo do nome. Ex.: Médico Pediatra e Neonatologista'
+
+          - label: Especialidade (espanhol)
+            name: especialidade_es
+            widget: string
+            required: false
+            hint: Deixe vazio para repetir o português.
+
+      # ---------------------------------------------------------------
+      - name: resumo
+        label: 2. Resumo profissional
+        file: content/resumo.json
+        fields:
+          - label: Parágrafos
+            name: paragrafos
+            widget: list
+            label_singular: parágrafo
+            collapsed: true
+            summary: '{{fields.pt}}'
+            hint: Cada item é um parágrafo do resumo. Arraste para reordenar.
             fields:
-              - { label: Português, name: pt, widget: string }
-              - { label: Espanhol, name: es, widget: string }
+              - label: Em português
+                name: pt
+                widget: text
+              - label: Em espanhol
+                name: es
+                widget: text
+                required: false
+                hint: Deixe vazio para repetir o português.
 
+      # ---------------------------------------------------------------
+      - name: contatos
+        label: 3. Contatos
+        file: content/contatos.json
+        fields:
           - label: Contatos
-            name: contatos
-            widget: object
+            name: itens
+            widget: list
+            label_singular: contato
+            collapsed: true
+            summary: '{{fields.rotulo_pt}} — {{fields.valor_pt}}'
+            hint: Um item para cada forma de contato. Arraste para mudar a ordem.
             fields:
-              - label: Título da seção
-                name: titulo
-                widget: object
-                fields:
-                  - { label: Português, name: pt, widget: string }
-                  - { label: Espanhol, name: es, widget: string }
-              - label: Lista de contatos
-                name: itens
-                widget: list
-                summary: '{{fields.rotulo.pt}} — {{fields.valor.pt}}'
-                fields:
-                  - label: Ícone
-                    name: tipo
-                    widget: select
-                    options:
-                      - { label: Email, value: email }
-                      - { label: Telefone, value: telefone }
-                      - { label: WhatsApp, value: whatsapp }
-                      - { label: Instagram, value: instagram }
-                      - { label: LinkedIn, value: linkedin }
-                      - { label: Currículo Lattes, value: lattes }
-                      - { label: Site, value: site }
-                  - label: Rótulo
-                    name: rotulo
-                    widget: object
-                    fields:
-                      - { label: Português, name: pt, widget: string }
-                      - { label: Espanhol, name: es, widget: string }
-                  - label: Texto exibido
-                    name: valor
-                    widget: object
-                    fields:
-                      - { label: Português, name: pt, widget: string }
-                      - { label: Espanhol, name: es, widget: string }
-                  - label: Link
-                    name: link
-                    widget: string
-                    required: false
-                    hint: 'mailto:email@exemplo.com, tel:+5511999999999 ou https://...'
+              - label: Ícone
+                name: tipo
+                widget: select
+                hint: Só muda o desenho que aparece ao lado.
+                options:
+                  - { label: Email, value: email }
+                  - { label: Telefone, value: telefone }
+                  - { label: WhatsApp, value: whatsapp }
+                  - { label: Instagram, value: instagram }
+                  - { label: LinkedIn, value: linkedin }
+                  - { label: Currículo Lattes, value: lattes }
+                  - { label: Site, value: site }
 
-          - label: Resumo profissional
-            name: resumo
-            widget: object
-            fields:
-              - label: Título da seção
-                name: titulo
-                widget: object
-                fields:
-                  - { label: Português, name: pt, widget: string }
-                  - { label: Espanhol, name: es, widget: string }
-              - label: Parágrafos
-                name: paragrafos
-                widget: list
-                summary: '{{fields.pt}}'
-                fields:
-                  - { label: Português, name: pt, widget: text }
-                  - { label: Espanhol, name: es, widget: text }
+              - label: Rótulo (português)
+                name: rotulo_pt
+                widget: string
+                hint: 'Texto pequeno acima do destaque. Ex.: Email, Telefone, WhatsApp'
 
-          - label: Formação acadêmica
-            name: formacao
-            widget: object
-            fields:
-              - label: Título da seção
-                name: titulo
-                widget: object
-                fields:
-                  - { label: Português, name: pt, widget: string }
-                  - { label: Espanhol, name: es, widget: string }
-              - label: Cursos
-                name: itens
-                widget: list
-                summary: '{{fields.ano}} — {{fields.curso.pt}}'
-                fields:
-                  - { label: Ano, name: ano, widget: string, hint: 'Ex: 2024' }
-                  - label: Curso / título
-                    name: curso
-                    widget: object
-                    fields:
-                      - { label: Português, name: pt, widget: string }
-                      - { label: Espanhol, name: es, widget: string }
-                  - { label: Instituição, name: instituicao, widget: string }
+              - label: Rótulo (espanhol)
+                name: rotulo_es
+                widget: string
+                required: false
+                hint: Deixe vazio para repetir o português.
 
-          - label: Experiências profissionais
-            name: experiencias
-            widget: object
-            fields:
-              - label: Título da seção
-                name: titulo
-                widget: object
-                fields:
-                  - { label: Português, name: pt, widget: string }
-                  - { label: Espanhol, name: es, widget: string }
-              - label: Experiências
-                name: itens
-                widget: list
-                summary: '{{fields.cargo.pt}} — {{fields.instituicao}}'
-                fields:
-                  - label: Cargo
-                    name: cargo
-                    widget: object
-                    fields:
-                      - { label: Português, name: pt, widget: string }
-                      - { label: Espanhol, name: es, widget: string }
-                  - { label: Instituição, name: instituicao, widget: string }
-                  - label: Situação
-                    name: situacao
-                    widget: object
-                    required: false
-                    hint: 'Ex: Atualmente, 2019–2023. Deixe vazio para não mostrar a etiqueta.'
-                    fields:
-                      - { label: Português, name: pt, widget: string, required: false }
-                      - { label: Espanhol, name: es, widget: string, required: false }
+              - label: Texto em destaque (português)
+                name: valor_pt
+                widget: string
+                hint: 'O que aparece em negrito. Ex.: delgadillo@uol.com.br'
 
-          - label: Rodapé
-            name: rodape
-            widget: object
+              - label: Texto em destaque (espanhol)
+                name: valor_es
+                widget: string
+                required: false
+                hint: Deixe vazio para repetir o português.
+
+              - label: Link
+                name: link
+                widget: string
+                required: false
+                hint: 'Para onde vai ao clicar. Ex.: mailto:nome@email.com, tel:+5511999999999, https://...'
+
+      # ---------------------------------------------------------------
+      - name: formacao
+        label: 4. Formação acadêmica
+        file: content/formacao.json
+        fields:
+          - label: Cursos
+            name: itens
+            widget: list
+            label_singular: curso
+            collapsed: true
+            summary: '{{fields.ano}} — {{fields.curso_pt}}'
+            hint: Do mais recente para o mais antigo.
             fields:
-              - { label: Português, name: pt, widget: string }
-              - { label: Espanhol, name: es, widget: string }
+              - label: Ano
+                name: ano
+                widget: string
+                hint: 'Só o ano. Ex.: 2024'
+
+              - label: Curso ou título (português)
+                name: curso_pt
+                widget: string
+
+              - label: Curso ou título (espanhol)
+                name: curso_es
+                widget: string
+                required: false
+                hint: Deixe vazio para repetir o português.
+
+              - label: Instituição
+                name: instituicao
+                widget: string
+                hint: 'Ex.: Centro Universitário São Camilo'
+
+      # ---------------------------------------------------------------
+      - name: experiencias
+        label: 5. Experiências profissionais
+        file: content/experiencias.json
+        fields:
+          - label: Experiências
+            name: itens
+            widget: list
+            label_singular: experiência
+            collapsed: true
+            summary: '{{fields.cargo_pt}} — {{fields.instituicao}}'
+            hint: Um item por cargo. Arraste para mudar a ordem.
+            fields:
+              - label: Cargo (português)
+                name: cargo_pt
+                widget: string
+                hint: 'Ex.: Coordenador da UTI Neonatal'
+
+              - label: Cargo (espanhol)
+                name: cargo_es
+                widget: string
+                required: false
+                hint: Deixe vazio para repetir o português.
+
+              - label: Instituição
+                name: instituicao
+                widget: string
+                hint: 'Ex.: Hospital Estadual Mario Covas'
+
+              - label: Etiqueta (português)
+                name: situacao_pt
+                widget: string
+                required: false
+                hint: 'Ex.: Atualmente. Deixe vazio para não mostrar etiqueta.'
+
+              - label: Etiqueta (espanhol)
+                name: situacao_es
+                widget: string
+                required: false
+                hint: Deixe vazio para repetir o português.

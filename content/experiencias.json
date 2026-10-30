@@ -1,0 +1,39 @@
+{
+  "itens": [
+    {
+      "cargo_pt": "Coordenador da Residência de Pediatria",
+      "cargo_es": "Coordinador de la Residencia de Pediatría",
+      "instituicao": "Secretaria de Saúde de São Bernardo Do Campo",
+      "situacao_pt": "Atualmente",
+      "situacao_es": "Actualmente"
+    },
+    {
+      "cargo_pt": "Coordenador da Neonatologia",
+      "cargo_es": "Coordinador Neonatal",
+      "instituicao": "Hospital e Maternidade Notrecare Intermédica ABC",
+      "situacao_pt": "Atualmente",
+      "situacao_es": "Actualmente"
+    },
+    {
+      "cargo_pt": "Coordenador da UTI Neonatal",
+      "cargo_es": "Coordinador de Terapia Intensiva Neonatal",
+      "instituicao": "Hospital Estadual Mario Covas",
+      "situacao_pt": "Atualmente",
+      "situacao_es": "Actualmente"
+    },
+    {
+      "cargo_pt": "Professor do Internato na área de Pediatria",
+      "cargo_es": "Profesor de Prácticas en el área de Pediatría",
+      "instituicao": "Centro Universitário São Camilo",
+      "situacao_pt": "Atualmente",
+      "situacao_es": "Actualmente"
+    },
+    {
+      "cargo_pt": "Médico preceptor",
+      "cargo_es": "Médico preceptor",
+      "instituicao": "Faculdade de Medicina do ABC",
+      "situacao_pt": "Atualmente",
+      "situacao_es": "Actualmente"
+    }
+  ]
+}
