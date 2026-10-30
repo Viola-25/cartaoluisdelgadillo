@@ -1,0 +1,167 @@
+backend:
+  name: git-gateway
+  branch: main
+  commit_messages:
+    create: 'CMS: criou {{collection}}'
+    update: 'CMS: atualizou {{collection}}'
+    delete: 'CMS: apagou {{collection}}'
+    uploadMedia: 'CMS: enviou imagem {{path}}'
+    deleteMedia: 'CMS: removeu imagem {{path}}'
+
+locale: pt
+# site_url não é necessário: o painel usa o próprio domínio onde está publicado.
+
+media_folder: 'assets/uploads'
+public_folder: 'assets/uploads'
+
+collections:
+  - name: cartao
+    label: Cartão de visita
+    label_singular: Cartão
+    description: Todos os textos do cartão, em português e espanhol.
+    files:
+      - name: perfil
+        label: Dados do cartão
+        file: content/perfil.json
+        fields:
+          - label: Nome completo
+            name: nome
+            widget: string
+            hint: Aparece no topo do cartão e no rodapé.
+
+          - label: Foto
+            name: foto
+            widget: image
+            required: false
+            hint: Envie uma foto quadrada. Se ficar vazia, aparece só o círculo azul.
+
+          - label: Especialidade
+            name: especialidade
+            widget: object
+            fields:
+              - { label: Português, name: pt, widget: string }
+              - { label: Espanhol, name: es, widget: string }
+
+          - label: Contatos
+            name: contatos
+            widget: object
+            fields:
+              - label: Título da seção
+                name: titulo
+                widget: object
+                fields:
+                  - { label: Português, name: pt, widget: string }
+                  - { label: Espanhol, name: es, widget: string }
+              - label: Lista de contatos
+                name: itens
+                widget: list
+                summary: '{{fields.rotulo.pt}} — {{fields.valor.pt}}'
+                fields:
+                  - label: Ícone
+                    name: tipo
+                    widget: select
+                    options:
+                      - { label: Email, value: email }
+                      - { label: Telefone, value: telefone }
+                      - { label: WhatsApp, value: whatsapp }
+                      - { label: Instagram, value: instagram }
+                      - { label: LinkedIn, value: linkedin }
+                      - { label: Currículo Lattes, value: lattes }
+                      - { label: Site, value: site }
+                  - label: Rótulo
+                    name: rotulo
+                    widget: object
+                    fields:
+                      - { label: Português, name: pt, widget: string }
+                      - { label: Espanhol, name: es, widget: string }
+                  - label: Texto exibido
+                    name: valor
+                    widget: object
+                    fields:
+                      - { label: Português, name: pt, widget: string }
+                      - { label: Espanhol, name: es, widget: string }
+                  - label: Link
+                    name: link
+                    widget: string
+                    required: false
+                    hint: 'mailto:email@exemplo.com, tel:+5511999999999 ou https://...'
+
+          - label: Resumo profissional
+            name: resumo
+            widget: object
+            fields:
+              - label: Título da seção
+                name: titulo
+                widget: object
+                fields:
+                  - { label: Português, name: pt, widget: string }
+                  - { label: Espanhol, name: es, widget: string }
+              - label: Parágrafos
+                name: paragrafos
+                widget: list
+                summary: '{{fields.pt}}'
+                fields:
+                  - { label: Português, name: pt, widget: text }
+                  - { label: Espanhol, name: es, widget: text }
+
+          - label: Formação acadêmica
+            name: formacao
+            widget: object
+            fields:
+              - label: Título da seção
+                name: titulo
+                widget: object
+                fields:
+                  - { label: Português, name: pt, widget: string }
+                  - { label: Espanhol, name: es, widget: string }
+              - label: Cursos
+                name: itens
+                widget: list
+                summary: '{{fields.ano}} — {{fields.curso.pt}}'
+                fields:
+                  - { label: Ano, name: ano, widget: string, hint: 'Ex: 2024' }
+                  - label: Curso / título
+                    name: curso
+                    widget: object
+                    fields:
+                      - { label: Português, name: pt, widget: string }
+                      - { label: Espanhol, name: es, widget: string }
+                  - { label: Instituição, name: instituicao, widget: string }
+
+          - label: Experiências profissionais
+            name: experiencias
+            widget: object
+            fields:
+              - label: Título da seção
+                name: titulo
+                widget: object
+                fields:
+                  - { label: Português, name: pt, widget: string }
+                  - { label: Espanhol, name: es, widget: string }
+              - label: Experiências
+                name: itens
+                widget: list
+                summary: '{{fields.cargo.pt}} — {{fields.instituicao}}'
+                fields:
+                  - label: Cargo
+                    name: cargo
+                    widget: object
+                    fields:
+                      - { label: Português, name: pt, widget: string }
+                      - { label: Espanhol, name: es, widget: string }
+                  - { label: Instituição, name: instituicao, widget: string }
+                  - label: Situação
+                    name: situacao
+                    widget: object
+                    required: false
+                    hint: 'Ex: Atualmente, 2019–2023. Deixe vazio para não mostrar a etiqueta.'
+                    fields:
+                      - { label: Português, name: pt, widget: string, required: false }
+                      - { label: Espanhol, name: es, widget: string, required: false }
+
+          - label: Rodapé
+            name: rodape
+            widget: object
+            fields:
+              - { label: Português, name: pt, widget: string }
+              - { label: Espanhol, name: es, widget: string }

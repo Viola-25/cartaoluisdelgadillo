@@ -1,0 +1,4 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Cartão de visita">
+  <rect width="64" height="64" rx="14" fill="#2c5aa0"/>
+  <path d="M27 13h10v9h9v10h-9v9H27v-9h-9V22h9z" fill="#ffffff"/>
+</svg>

@@ -1,9 +1,12 @@
 <!DOCTYPE html>
-<html lang="pt"> <!-- Este atributo será atualizado via JS -->
+<html lang="pt">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Cartão de visita digital do Dr. Luis Fernando Delgadillo Trigo - Médico Pediatra e Neonatologista.">
     <title>Dr. Luis Fernando Delgadillo Trigo - Cartão de Visita Digital</title>
+    <link rel="icon" href="favicon.svg" type="image/svg+xml">
+    <meta name="theme-color" content="#2c5aa0">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         :root {
@@ -107,16 +110,16 @@
         .profile-photo {
             width: 150px;
             height: 150px;
-            margin: 0 auto 20px; /* Adicionado para centralizar e dar margem inferior */
+            margin: 0 auto 20px;
             border-radius: 50%;
             border: 5px solid white;
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
             display: flex;
             align-items: center;
             justify-content: center;
-            /* Estilos para a imagem de fundo */
             background-size: cover;
             background-position: center;
+            background-color: var(--primary-color);
             position: relative;
             z-index: 1;
         }
@@ -185,14 +188,14 @@
         }
 
         .contact-item {
-            text-decoration: none; /* Remove underline from link */
+            text-decoration: none;
             display: flex;
             align-items: center;
             gap: 15px;
             padding: 15px;
             background: var(--accent-color);
             border-radius: 12px;
-            color: var(--text-color); /* Ensure text color is correct */
+            color: var(--text-color);
             border: 1px solid var(--border-color);
             transition: all 0.3s ease;
         }
@@ -213,10 +216,13 @@
             justify-content: center;
             color: white;
             font-size: 18px;
+            flex-shrink: 0;
         }
 
         .contact-text {
             flex: 1;
+            min-width: 0;
+            overflow-wrap: anywhere;
         }
 
         .contact-label {
@@ -302,6 +308,10 @@
             line-height: 1.7;
         }
 
+        .summary-text p + p {
+            margin-top: 12px;
+        }
+
         .experience-item {
             background: white;
             border-radius: 12px;
@@ -358,6 +368,22 @@
 
         .hidden {
             display: none;
+        }
+
+        .status-message {
+            padding: 40px 30px;
+            text-align: center;
+            color: #7f8c8d;
+        }
+
+        .status-message.error {
+            color: #b3261e;
+        }
+
+        .status-message code {
+            background: var(--light-gray);
+            padding: 2px 6px;
+            border-radius: 4px;
         }
 
         @media (max-width: 768px) {
@@ -466,264 +492,304 @@
     <div class="container">
         <div class="business-card">
             <div class="header">
-                <div class="profile-photo" style="background-image: url('https://i.imgur.com/Y8LzMxj.jpg'); background-color: var(--primary-color);">
-                </div>
-                <h1 class="doctor-name">Dr. Luis Fernando Delgadillo Trigo</h1>
-                <p class="specialty" data-pt="Médico Pediatra e Neonatologista" data-es="Médico Pediatra y Neonatólogo">Médico Pediatra e Neonatologista</p>
+                <div class="profile-photo" id="profile-photo"></div>
+                <h1 class="doctor-name" id="doctor-name"></h1>
+                <p class="specialty" id="specialty"></p>
             </div>
 
-            <div class="content">
-                <div class="section">
-                    <h2 class="section-title">
-                        <i class="fas fa-address-book section-icon" aria-hidden="true"></i>
-                        <span data-pt="CONTATOS" data-es="CONTACTOS">CONTATOS</span>
-                    </h2>
-                    <div class="contact-info">
-                        <a href="mailto:delgadillo@uol.com.br" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-envelope"></i>
-                            </div>
-                            <div class="contact-text">
-                                <div class="contact-label" data-pt="Email" data-es="Correo electrónico">Email</div>
-                                <div class="contact-value">
-                                    delgadillo@uol.com.br
-                                </div>
-                            </div>
-                        </a>
-                        <a href="tel:+5511999754297" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-phone" aria-hidden="true"></i>
-                            </div>
-                            <div class="contact-text">
-                                <div class="contact-label" data-pt="Telefone" data-es="Teléfono">Telefone</div>
-                                <div class="contact-value">
-                                    (11) 99975-4297
-                                </div>
-                            </div>
-                        </a>
-                        <a href="https://wa.me/5511999754297" target="_blank" rel="noopener noreferrer" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-whatsapp" aria-hidden="true"></i>
-                            </div>
-                            <div class="contact-text">
-                                <div class="contact-label" data-pt="WhatsApp" data-es="WhatsApp">WhatsApp</div>
-                                <div class="contact-value" data-pt="Iniciar Conversa" data-es="Iniciar Conversación">
-                                    Iniciar Conversa
-                                </div>
-                            </div>
-                        </a>
-                        <a href="https://www.instagram.com/luisftrigo__?igsh=MXM3ZDlzdHZ6YTQ1MA==" target="_blank" rel="noopener noreferrer" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-instagram" aria-hidden="true"></i>
-                            </div>
-                            <div class="contact-text">
-                                <div class="contact-label" data-pt="Instagram" data-es="Instagram">Instagram</div>
-                                <div class="contact-value">
-                                    @luisftrigo__
-                                </div>
-                            </div>
-                        </a>
-                        <a href="https://br.linkedin.com/in/luis-fernando-delgadillo-trigo-3334a99b" target="_blank" rel="noopener noreferrer" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fab fa-linkedin-in" aria-hidden="true"></i>
-                            </div>
-                            <div class="contact-text">
-                                <div class="contact-label" data-pt="LinkedIn" data-es="LinkedIn">LinkedIn</div>
-                                <div class="contact-value" data-pt="Ver Perfil" data-es="Ver Perfil">
-                                    Ver Perfil
-                                </div>
-                            </div>
-                        </a>
-                        <a href="http://lattes.cnpq.br/2943574140338588" target="_blank" rel="noopener noreferrer" class="contact-item">
-                            <div class="contact-icon">
-                                <i class="fas fa-file-alt" aria-hidden="true"></i>
-                            </div>
-                            <div class="contact-text">
-                                <div class="contact-label" data-pt="Currículo Lattes" data-es="Currículum Lattes">Currículo Lattes</div>
-                                <div class="contact-value" data-pt="Acessar Currículo" data-es="Acceder Currículum">
-                                    Acessar Currículo
-                                </div>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">
-                        <i class="fas fa-info-circle section-icon" aria-hidden="true"></i>
-                        <span data-pt="RESUMO PROFISSIONAL" data-es="RESUMEN PROFESIONAL">RESUMO PROFISSIONAL</span>
-                    </h2>
-                    <div class="summary-text">
-                        <p data-pt="Possui graduação em medicina pela Universidad Mayor de San Simon (1990) e Mestrado Profissional em Nutrição pelo Centro Universitário São Camilo." data-es="Graduado en medicina por la Universidad Mayor de San Simon (1990) y tiene una Maestría Profesional en Nutrición del Centro Universitário São Camilo.">
-                            Possui graduação em medicina pela Universidad Mayor de San Simon (1990) e Mestrado Profissional em Nutrição pelo Centro Universitário São Camilo.
-                        </p>
-                        <p data-pt="Atualmente é coordenador da Residência de Pediatria do SUS ABC, coordenador da unidade de terapia intensiva neonatal da Intermédica ABC e do Hospital Estadual Mário Covas, médico colaborador da Faculdade de Medicina do ABC, professor da Faculdade de Medicina São Camilo e médico diarista no Complexo Hospitalar Municipal de São Bernardo do Campo." data-es="Actualmente es coordinador de la Residencia de Pediatría del SUS ABC, coordinador de la unidad de cuidados intensivos neonatales de Intermédica ABC y del Hospital Estadual Mário Covas, médico colaborador de la Facultad de Medicina del ABC, profesor de la Facultad de Medicina São Camilo y médico de planta en el Complejo Hospitalario Municipal de São Bernardo do Campo.">
-                            Atualmente é coordenador da Residência de Pediatria do SUS ABC, coordenador da unidade de terapia intensiva neonatal da Intermédica ABC e do Hospital Estadual Mário Covas, médico colaborador da Faculdade de Medicina do ABC, professor da Faculdade de Medicina São Camilo e médico diarista no Complexo Hospitalar Municipal de São Bernardo do Campo.
-                        </p>
-                        <p data-pt="Tem vasta experiência na área de Medicina, com ênfase em Neonatologia, atuando principalmente nos temas: neonatal, recém-nascido, emergências em sala de parto, pediatria e anti-inflamatório." data-es="Tiene una vasta experiencia en el área de Medicina, con énfasis en Neonatología, actuando principalmente en los siguientes temas: neonatal, recién nacido, emergencias en la sala de partos, pediatría y antiinflamatorios.">
-                            Tem vasta experiência na área de Medicina, com ênfase em Neonatologia, atuando principalmente nos temas: neonatal, recém-nascido, emergências em sala de parto, pediatria e anti-inflamatório.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">
-                        <i class="fas fa-graduation-cap section-icon" aria-hidden="true"></i>
-                        <span data-pt="FORMAÇÃO ACADÊMICA" data-es="FORMACIÓN ACADÉMICA">FORMAÇÃO ACADÊMICA</span>
-                    </h2>
-                    <div class="timeline">
-                        <div class="timeline-item">
-                            <div class="timeline-year">2024</div>
-                            <div class="timeline-degree" data-pt="Mestrado em Nutrição" data-es="Mestrado en Nutrición">Mestrado em Nutrição</div>
-                            <div class="timeline-institution">Centro Universitário São Camilo</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">2021</div>
-                            <div class="timeline-degree" data-pt="Gestão em Saúde" data-es="Gestión de la Salud">Gestão em Saúde</div>
-                            <div class="timeline-institution">Fundação Getúlio Vargas</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">1994</div>
-                            <div class="timeline-degree" data-pt="Residência em Neonatologia" data-es="Especialista en Neonatología">Residência em Neonatologia</div>
-                            <div class="timeline-institution">Santa Casa de Misericórdia de São Paulo</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">1992</div>
-                            <div class="timeline-degree" data-pt="Residência em Pediatria" data-es="Especialista en Pediatría">Residência em Pediatria</div>
-                            <div class="timeline-institution">Santa Casa de Misericórdia de São Paulo</div>
-                        </div>
-                        <div class="timeline-item">
-                            <div class="timeline-year">1990</div>
-                            <div class="timeline-degree" data-pt="Graduação em Medicina" data-es="Graduado en Medicina">Graduação em Medicina</div>
-                            <div class="timeline-institution">Universidad Mayor de San Simon</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="section">
-                    <h2 class="section-title">
-                        <i class="fas fa-briefcase section-icon" aria-hidden="true"></i>
-                        <span data-pt="EXPERIÊNCIAS PROFISSIONAIS" data-es="EXPERIENCIAS PROFESIONALES">EXPERIÊNCIAS PROFISSIONAIS</span>
-                    </h2>
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-position" data-pt="Coordenador da Residência de Pediatria" data-es="Coordinador de la Residencia de Pediatría">Coordenador da Residência de Pediatria</div>
-                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
-                        </div>
-                        <div class="experience-institution">Secretaria de Saúde de São Bernardo Do Campo</div>
-                    </div>
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-position" data-pt="Coordenador da Neonatologia" data-es="Coordinador Neonatal">Coordenador da Neonatologia</div>
-                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
-                        </div>
-                        <div class="experience-institution">Hospital e Maternidade Notrecare Intermédica ABC</div>
-                    </div>
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-position" data-pt="Coordenador da UTI Neonatal" data-es="Coordinador de Terapia Intensiva Neonatal">Coordenador da UTI Neonatal</div>
-                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
-                        </div>
-                        <div class="experience-institution">Hospital Estadual Mario Covas</div>
-                    </div>
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-position" data-pt="Professor do Internato na área de Pediatria" data-es="Profesor de Prácticas en el área de Pediatría">Professor do Internato na área de Pediatria</div>
-                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
-                        </div>
-                        <div class="experience-institution">Centro Universitário São Camilo</div>
-                    </div>
-                    <div class="experience-item">
-                        <div class="experience-header">
-                            <div class="experience-position" data-pt="Médico preceptor" data-es="Médico preceptor">Médico preceptor</div>
-                            <div class="experience-status" data-pt="Atualmente" data-es="Actualmente">Atualmente</div>
-                        </div>
-                        <div class="experience-institution">Faculdade de Medicina do ABC</div>
-                    </div>
-                </div>
+            <div class="content" id="content">
+                <p class="status-message" id="status-message">Carregando…</p>
             </div>
 
             <div class="footer">
-                <p>&copy; <span id="current-year"></span> Dr. Luis Fernando Delgadillo Trigo. Todos os direitos reservados.</p>
+                <p id="footer-text"></p>
             </div>
         </div>
     </div>
 
     <!-- Botão Flutuante de Compartilhamento -->
-    <button class="share-fab" id="share-btn" title="Compartilhar">
+    <button class="share-fab" id="share-btn" title="Compartilhar" aria-label="Compartilhar">
         <i class="fas fa-share-alt"></i>
     </button>
 
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        (function () {
+            'use strict';
+
+            // Todo o conteúdo do cartão vive em content/perfil.json.
+            // Para editar sem mexer em código, use /admin (Decap CMS).
+            const CONTENT_URL = 'content/perfil.json';
+
+            const ICONS = {
+                email: 'fas fa-envelope',
+                telefone: 'fas fa-phone',
+                whatsapp: 'fab fa-whatsapp',
+                instagram: 'fab fa-instagram',
+                linkedin: 'fab fa-linkedin-in',
+                lattes: 'fas fa-file-alt',
+                site: 'fas fa-globe'
+            };
+
             const langButtons = document.querySelectorAll('.lang-btn');
-            const translatableElements = document.querySelectorAll('[data-pt]');
-            const translations = {};
+            const contentEl = document.getElementById('content');
+            const footerEl = document.getElementById('footer-text');
+            const statusEl = document.getElementById('status-message');
 
-            translatableElements.forEach(el => {
-                // Use a unique ID or create one if it doesn't exist
-                if (!el.id) el.id = `translatable-${Math.random().toString(36).substr(2, 9)}`;
-                translations[el.id] = {
-                    pt: el.dataset.pt || el.innerHTML,
-                    es: el.dataset.es || el.innerHTML,
-                    // Handle elements that have HTML content, like the vCard button
-                    ptText: el.dataset.ptText,
-                    esText: el.dataset.esText,
-                };
-            });
+            let data = null;
+            let lang = localStorage.getItem('preferredLanguage') === 'es' ? 'es' : 'pt';
 
-            function setLanguage(lang) {
-                translatableElements.forEach(el => {
-                    const translationData = translations[el.id];
-                    if (translationData) {
-                        el.innerHTML = translationData[`${lang}Text`] || translationData[lang];
-                    }
+            function esc(value) {
+                return String(value == null ? '' : value).replace(/[&<>"']/g, function (ch) {
+                    return { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch];
                 });
-
-                // Atualiza o lang da tag <html> para acessibilidade
-                document.documentElement.lang = lang;
-
-                langButtons.forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.lang === lang);
-                });
-                localStorage.setItem('preferredLanguage', lang);
             }
 
-            langButtons.forEach(button => {
-                button.addEventListener('click', () => {
-                    setLanguage(button.dataset.lang);
+            // Campo de texto bilingue: { pt: "...", es: "..." }
+            function pick(field) {
+                if (field == null) return '';
+                if (typeof field === 'string') return field;
+                return field[lang] || field.pt || field.es || '';
+            }
+
+            function sectionTitle(icon, text) {
+                const h2 = document.createElement('h2');
+                h2.className = 'section-title';
+                h2.innerHTML = '<i class="' + icon + ' section-icon" aria-hidden="true"></i><span>' + esc(text) + '</span>';
+                return h2;
+            }
+
+            function newSection() {
+                const section = document.createElement('div');
+                section.className = 'section';
+                return section;
+            }
+
+            function buildContatos(contatos) {
+                const section = newSection();
+                section.appendChild(sectionTitle('fas fa-address-book', pick(contatos.titulo)));
+
+                const grid = document.createElement('div');
+                grid.className = 'contact-info';
+
+                (contatos.itens || []).forEach(function (item) {
+                    const link = item.link || '#';
+                    const a = document.createElement('a');
+                    a.className = 'contact-item';
+                    a.href = link;
+                    if (/^https?:/i.test(link)) {
+                        a.target = '_blank';
+                        a.rel = 'noopener noreferrer';
+                    }
+
+                    const icon = document.createElement('div');
+                    icon.className = 'contact-icon';
+                    icon.innerHTML = '<i class="' + (ICONS[item.tipo] || ICONS.site) + '" aria-hidden="true"></i>';
+
+                    const text = document.createElement('div');
+                    text.className = 'contact-text';
+
+                    const label = document.createElement('div');
+                    label.className = 'contact-label';
+                    label.textContent = pick(item.rotulo);
+
+                    const value = document.createElement('div');
+                    value.className = 'contact-value';
+                    value.textContent = pick(item.valor);
+
+                    text.appendChild(label);
+                    text.appendChild(value);
+                    a.appendChild(icon);
+                    a.appendChild(text);
+                    grid.appendChild(a);
+                });
+
+                section.appendChild(grid);
+                return section;
+            }
+
+            function buildResumo(resumo) {
+                const section = newSection();
+                section.appendChild(sectionTitle('fas fa-info-circle', pick(resumo.titulo)));
+
+                const wrapper = document.createElement('div');
+                wrapper.className = 'summary-text';
+
+                (resumo.paragrafos || []).forEach(function (paragrafo) {
+                    const p = document.createElement('p');
+                    p.textContent = pick(paragrafo);
+                    wrapper.appendChild(p);
+                });
+
+                section.appendChild(wrapper);
+                return section;
+            }
+
+            function buildFormacao(formacao) {
+                const section = newSection();
+                section.appendChild(sectionTitle('fas fa-graduation-cap', pick(formacao.titulo)));
+
+                const timeline = document.createElement('div');
+                timeline.className = 'timeline';
+
+                (formacao.itens || []).forEach(function (item) {
+                    const el = document.createElement('div');
+                    el.className = 'timeline-item';
+
+                    if (item.ano) {
+                        const ano = document.createElement('div');
+                        ano.className = 'timeline-year';
+                        ano.textContent = item.ano;
+                        el.appendChild(ano);
+                    }
+
+                    const curso = document.createElement('div');
+                    curso.className = 'timeline-degree';
+                    curso.textContent = pick(item.curso);
+                    el.appendChild(curso);
+
+                    if (item.instituicao) {
+                        const inst = document.createElement('div');
+                        inst.className = 'timeline-institution';
+                        inst.textContent = item.instituicao;
+                        el.appendChild(inst);
+                    }
+
+                    timeline.appendChild(el);
+                });
+
+                section.appendChild(timeline);
+                return section;
+            }
+
+            function buildExperiencias(experiencias) {
+                const section = newSection();
+                section.appendChild(sectionTitle('fas fa-briefcase', pick(experiencias.titulo)));
+
+                (experiencias.itens || []).forEach(function (item) {
+                    const el = document.createElement('div');
+                    el.className = 'experience-item';
+
+                    const header = document.createElement('div');
+                    header.className = 'experience-header';
+
+                    const cargo = document.createElement('div');
+                    cargo.className = 'experience-position';
+                    cargo.textContent = pick(item.cargo);
+                    header.appendChild(cargo);
+
+                    const situacao = pick(item.situacao);
+                    if (situacao) {
+                        const status = document.createElement('div');
+                        status.className = 'experience-status';
+                        status.textContent = situacao;
+                        header.appendChild(status);
+                    }
+
+                    el.appendChild(header);
+
+                    if (item.instituicao) {
+                        const inst = document.createElement('div');
+                        inst.className = 'experience-institution';
+                        inst.textContent = item.instituicao;
+                        el.appendChild(inst);
+                    }
+
+                    section.appendChild(el);
+                });
+
+                return section;
+            }
+
+            function render() {
+                if (!data) return;
+
+                document.documentElement.lang = lang;
+                document.title = (data.nome || 'Cartão de visita') + ' - ' + pick(data.especialidade);
+
+                const photo = document.getElementById('profile-photo');
+                photo.style.backgroundImage = data.foto ? 'url("' + data.foto + '")' : '';
+
+                document.getElementById('doctor-name').textContent = data.nome || '';
+                document.getElementById('specialty').textContent = pick(data.especialidade);
+
+                contentEl.innerHTML = '';
+                if (data.contatos) contentEl.appendChild(buildContatos(data.contatos));
+                if (data.resumo) contentEl.appendChild(buildResumo(data.resumo));
+                if (data.formacao) contentEl.appendChild(buildFormacao(data.formacao));
+                if (data.experiencias) contentEl.appendChild(buildExperiencias(data.experiencias));
+
+                const rodape = pick(data.rodape);
+                footerEl.textContent = '© ' + new Date().getFullYear() + ' ' + (data.nome || '') + (rodape ? '. ' + rodape : '');
+
+                langButtons.forEach(function (btn) {
+                    btn.classList.toggle('active', btn.dataset.lang === lang);
+                });
+            }
+
+            function showError(message) {
+                statusEl.className = 'status-message error';
+                statusEl.textContent = message;
+            }
+
+            langButtons.forEach(function (button) {
+                button.addEventListener('click', function () {
+                    lang = button.dataset.lang;
+                    localStorage.setItem('preferredLanguage', lang);
+                    render();
                 });
             });
 
-            const savedLang = localStorage.getItem('preferredLanguage') || 'pt';
-            setLanguage(savedLang);
+            fetch(CONTENT_URL, { cache: 'no-cache' })
+                .then(function (response) {
+                    if (!response.ok) throw new Error('HTTP ' + response.status);
+                    return response.json();
+                })
+                .then(function (json) {
+                    data = json;
+                    render();
+                })
+                .catch(function (error) {
+                    console.error('Erro ao carregar o conteúdo:', error);
+                    showError('Não foi possível carregar o conteúdo do cartão (' + CONTENT_URL + '). Se você abriu o arquivo direto no computador, use um servidor local ou acesse o site publicado.');
+                });
 
-            // Atualiza o ano no rodapé
-            document.getElementById('current-year').textContent = new Date().getFullYear();
-
-            // Funcionalidade de Compartilhamento
+            // Compartilhamento
             const shareBtn = document.getElementById('share-btn');
-            shareBtn.addEventListener('click', async () => {
+            shareBtn.addEventListener('click', async function () {
                 const shareData = {
-                    title: 'Dr. Luis Fernando Delgadillo Trigo',
-                    text: 'Cartão de Visita Digital - Médico Pediatra e Neonatologista',
+                    title: data && data.nome ? data.nome : document.title,
+                    text: (data ? pick(data.especialidade) : '') + ' - Cartão de Visita Digital',
                     url: window.location.href
                 };
 
                 try {
-                    // Usa a Web Share API se disponível
                     if (navigator.share) {
                         await navigator.share(shareData);
                     } else {
-                        // Fallback para desktop: copiar para a área de transferência
                         await navigator.clipboard.writeText(window.location.href);
-                        alert('Link do cartão copiado para a área de transferência!');
+                        alert(lang === 'es'
+                            ? '¡Enlace del tarjeta copiado al portapapeles!'
+                            : 'Link do cartão copiado para a área de transferência!');
                     }
                 } catch (err) {
-                    console.error("Erro ao compartilhar: ", err);
+                    console.error('Erro ao compartilhar: ', err);
                 }
             });
-        });
+        })();
+    </script>
+
+    <!-- Login por email/senha: usado apenas nos links de convite do Netlify Identity -->
+    <script src="https://identity.netlify.com/v1/netlify-identity-widget.js"></script>
+    <script>
+        if (window.netlifyIdentity) {
+            window.netlifyIdentity.on('init', function (user) {
+                if (!user) {
+                    window.netlifyIdentity.on('login', function () {
+                        document.location.href = '/admin/';
+                    });
+                }
+            });
+        }
     </script>
 </body>
 </html>
